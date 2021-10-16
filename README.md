@@ -4,7 +4,7 @@
 Tested by Chrome & Firefox.
 
 
-## How to open index.html?
+## How to open index.html
 1. Download ZIP using the green 'Code' button in this page  <br />
    OR using this link 'https://github.com/urosaria/front-end/archive/refs/heads/master.zip'
 
