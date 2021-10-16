@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-    <div style="margin: 0.5rem">
-      Back-end server URL: <input type="text" ref="input" id="backend" value="http://127.0.0.1:3000" />
-      <button v-on:click="backend()" style="margin-left: 5px; border: 1px solid #333;">Connect</button>
-    </div>
-    <Employee :msg="this.host" v-if="loading" />
+    <Employee />
   </div>
 </template>
 
@@ -16,30 +12,21 @@ export default {
   metaInfo: {
     viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
   },
-  data: () => ({
-    host: '',
-    loading: false,
-  }),
   components: {
     Employee
-  },mounted() {
-    const backend = document.getElementById('backend').value;
-    this.host = backend;
   },
-  methods: {
-    backend: function () {
-      this.loading = !this.loading;
-    },
-  }
 }
 </script>
 
 <style>
-#app {
-}
+/*-------- Font-Family-------*/
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+/*-------- common-css -------*/
+
 * {font-size:12px;box-sizing: border-box;}
 a {text-decoration: none;}
-body{margin:0;background-color: #ddd; }
+body{margin:0;background-color: #ddd;font-family: 'Roboto', sans-serif;}
 button{border:none;}
 
 dl, ol, ul{margin-top: 0;padding: 0;margin-bottom: 1rem;}

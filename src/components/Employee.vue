@@ -1,12 +1,15 @@
 <template>
   <section>
-
+    <div style="margin: 0.5rem; z-index: 999; position: absolute; top:0;">
+      Back-end server URL: <input type="text" ref="input" id="backend" value="http://127.0.0.1:3000" />
+      <button v-on:click="backend()" style="margin-left: 5px; border: 1px solid #333;">Connect</button>
+    </div>
     <div id="header">
       <div class="wrapper">
         <div class="section-intro">
           <h2 class="font-weight">MEET THE TEAM</h2>
         </div>
-        <ul class="filter">
+        <ul class="filter" v-show="show">
           <li><button v-on:click="deptApiCall('')" :class = "[dept==='' ? 'font-weight' : '']" >All</button></li>
           <li><button v-on:click="deptApiCall('Sales')" :class = "[dept==='Sales' ? 'font-weight' : '']" >Sales</button></li>
           <li><button v-on:click="deptApiCall('Marketing')" :class = "[dept==='Marketing' ? 'font-weight' : '']" >Marketing</button></li>
@@ -16,7 +19,7 @@
       </div>
     </div>
 
-    <div v-if="isLoading" class="loading">
+    <div class="loading" v-if="isLoading">
       <div class="loadingBox">
         <div class="dim"></div>
         <div class="circle"></div>
@@ -61,6 +64,7 @@ import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser, faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
+import members from '../assets/members.json'
 
 library.add(faUser, faMapMarkedAlt);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
@@ -75,60 +79,60 @@ export default {
     activeItem: null,
     activeProfile: true,
     isActive:  false,
-    items: [],
+    items: members,
     limit: 0,
     show: false,
   }),
-  props: {
-    msg: String,
-  },
   mounted() {
-    this.isLoading=true;
-    this.callAPI();
-    const container = document.querySelector('#employee');
-    let offset = 0;
+      const container = document.querySelector('#employee');
+      let offset = 0;
 
-    window.addEventListener('wheel', (e) => {
-      offset += Math.sign(e.deltaY) * 60;
-
-      if (offset < 0) {
-        offset = 0;
-      } else if (offset > container.scrollWidth - window.innerWidth) {
-        offset = container.scrollWidth - window.innerWidth;
-      }
-      container.scrollLeft=offset;
-      //container.style.transform = `translateX(-${offset}px`;
-      if(container.scrollLeft + container.clientWidth >= container.scrollWidth && !this.isLoading) {
-        container.style.justifyContent = 'flex-start';
-        this.isLoading = true;
-        setTimeout(this.infiniteHandler, 1200);
-      }
-    });
+      //window.addEventListener('wheel', (e) => {
+      window.addEventListener('wheel', (e) => {
+        offset += Math.sign(e.deltaY) * 60;
+        if (offset < 0) {
+          offset = 0;
+        } else if (offset > container.scrollWidth - window.innerWidth) {
+          offset = container.scrollWidth - window.innerWidth;
+        }
+        container.scrollLeft=offset;
+        //container.style.transform = `translateX(-${offset}px`;
+        if(container.scrollLeft + container.clientWidth >= container.scrollWidth && !this.isLoading && this.show) {
+          container.style.justifyContent = 'flex-start';
+          this.isLoading = true;
+          setTimeout(this.infiniteHandler, 500);
+        }
+      });
+      container.addEventListener('scroll', () => {
+        if(container.scrollLeft + container.clientWidth >= container.scrollWidth && !this.isLoading && this.show) {
+          container.style.justifyContent = 'flex-start';
+          this.isLoading = true;
+          setTimeout(this.infiniteHandler, 500);
+        }
+      });
   },
   methods: {
     toggle: function () {
       this.isActive = !this.isActive;
       this.activeProfile = !this.activeProfile;
     },
-    infiniteHandler(url = this.msg) {
+    infiniteHandler(url = this.host) {
       if(this.dept !== '') {
         url = url+'/dept/'+this.dept;
       }
       jsonp(url).then((data) => {
-        setTimeout(() => {
-          if(data.users.length) {
-            this.items.push(...data.users);
-            this.isLoading = false;
-          } else {
-            //$state.complete()
-          }
-        }, 1000);
+        if(data.users.length) {
+          this.items.push(...data.users);
+          this.isLoading = false;
+        } else {
+          //$state.complete()
+        }
       }, function(error) {
         // handle errors
         console.log(error);
       });
     },
-    callAPI: function (url = this.msg) {
+    callAPI: function (url = this.host) {
       try {
         if(this.dept !== '') {
           url = url+'/dept/'+this.dept;
@@ -139,7 +143,7 @@ export default {
           this.items = data.users;
           this.isLoading=false;
         }, function(error) {
-          console.log(error+'1:');
+          console.log(error);
           this.isError=true;
         });
       } catch (err) {
@@ -149,18 +153,23 @@ export default {
       }
     },
     deptApiCall: function (dept){
-      //const url = this.msg;
       this.dept = dept;
       this.show = true;
       const container = document.querySelector('#employee');
       container.style.justifyContent = 'center';
       this.callAPI();
-      //this.callAPI(url+'/dept/'+dept);
     },
     details: function (i){
       this.preActiveItem = this.activeItem;
       this.activeItem = i;
       this.activeProfile=true;
+    },
+    backend: function () {
+      const backend = document.getElementById('backend').value;
+      this.host = backend;
+      this.isLoading=true;
+      this.show=true;
+      this.callAPI();
     },
   },
 }
@@ -177,7 +186,7 @@ div#header .wrapper ul li button{padding:1rem 2rem;font-size:1rem;transition: al
 div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0.5rem;font-weight: bold;color:white;background-color:#222;}
 
 @media screen and (max-width: 767px) {
-  div#header {font-weight: bold; margin: 0!important; position: fixed; top: 0; left: 0; right: 0; z-index: 9;box-shadow: 2px 3px 4.7px 0.3px rgb(0 0 0 / 24%);background-color: #dddddd;}
+  div#header {font-weight: bold; margin: 0!important; position: fixed; padding-top: 20px; top: 0; left: 0; right: 0; z-index: 9;box-shadow: 2px 3px 4.7px 0.3px rgb(0 0 0 / 24%);background-color: #dddddd;}
   div#header .wrapper ul {display: flex; width:90%; margin:0 auto;justify-content: space-around}
   div#header .wrapper ul li {margin: 0.3rem}
   div#header .wrapper .section-intro h2:after {height: .3rem; margin: 0.5rem auto 1rem;}
@@ -201,13 +210,8 @@ div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0
 
 @media (min-width:768px) {
   section {margin:3rem 0;}
-  /*.card-carousel { -ms-overflow-style: none; }*/
-  /*.card-carousel::-webkit-scrollbar{ display:none; }*/
-
   .card-carousel{position: relative;height:340px;display:flex;overflow-x:auto;height:25rem; padding: 0 3rem;justify-content: center}
-.scrolls{
-  justify-content: flex-start !important;
-}
+
   .pcard{width:6.5rem;height:220px;margin-bottom:0;opacity: 0.5;filter:grayscale(100%);-webkit-filter:grayscale(100%);}
 
   .pcard:hover{width:140px;/*height:330px;*/opacity: 1;filter:none;-webkit-filter:grayscale(0%);}
@@ -290,8 +294,6 @@ div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0
 .pcard>.pic>.pmap {opacity: 0; }
 .pprofile {z-index: 9}
 
-
-
 @-webkit-keyframes detail-on {
   0%{}
   19% {
@@ -321,20 +323,6 @@ div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0
   }
 }
 
-
-/* map */
-.map{opacity:0;position:absolute;right:10px;bottom:30px;width:30px;height:30px;border-radius: 20px;overflow:hidden;transition: all ease-in-out 0.7s;}
-.map>a.m{z-index:10;position:absolute;right:0;bottom:0;width:100%;height:100%;border-radius: 20px;display:block;transition: all ease-in-out 0.5s;}
-.map>a.p{z-index:5;position:absolute;right:0;bottom:0;width:0;height:0;border-radius: 20px;display:block;transition: all ease-in-out 0.5s;}
-/*.map>.gmap{z-index:1;position:absolute;right:0;top:0;width:240px;height:240px;}*/
-.map>.gmap{z-index:1;right:0;top:0;height:19rem;}
-
-.pcard.on .map{opacity:1;}
-
-.pic.on .map{right:0;bottom:0;width:100%;height:100%;border-radius:0;}
-.pic.on .map>a.m{width:0;height:0;}
-.pic.on .map>a.p{right:10px;bottom:30px;width:30px;height:30px;}
-
 @keyframes spinCircle {
   from {
     transform:translate(-50%, -50%) rotate(0);
@@ -346,15 +334,15 @@ div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0
 .loadingBox .circle {
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: 25%;
   transform: translate(-50%, -50%);
   width: 40px;
   height: 40px;
   border: 5px solid #fff;
   border-top: 5px solid #333;
   border-radius: 50em;
-  -webkit-animation-name: spinCircle-data-v-7e680044;
-  animation-name: spinCircle-data-v-7e680044;
+  -webkit-animation-name: spinCircle;
+  animation-name: spinCircle;
   -webkit-animation-duration: .8s;
   animation-duration: .8s;
   -webkit-animation-iteration-count: infinite;
@@ -364,11 +352,4 @@ div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0
 
 .invisible {opacity:0; }
 .visible {opacity:1 !important;}
-
-.off {
-
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
 </style>

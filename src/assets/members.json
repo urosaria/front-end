@@ -1,0 +1,262 @@
+[
+    {
+      "name": "Adamantino Jesus",
+      "dept": "Marketing",
+      "position": "Senior Manager",
+      "email": "adamantino.jesus@example.com",
+      "picture": "https://randomuser.me/api/portraits/men/39.jpg",
+      "location": {
+        "street": {
+          "number": 6534,
+          "name": "Rua Dezesseis de Maio"
+        },
+        "city": "Cuiabá",
+        "state": "Mato Grosso",
+        "country": "Brazil",
+        "postcode": 77862,
+        "coordinates": {
+          "latitude": "-69.2673",
+          "longitude": "-174.1240"
+        },
+        "timezone": {
+          "offset": "-2:00",
+          "description": "Mid-Atlantic"
+        }
+      },
+      "desc": "Adamantino Jesusis a Senior Manager of Marketing department. The primary responsibility is to provide the necessary research."
+    },
+    {
+      "name": "Justin Sanders",
+      "dept": "IT",
+      "position": "Junior Manager",
+      "email": "justin.sanders@example.com",
+      "picture": "https://randomuser.me/api/portraits/men/91.jpg",
+      "location": {
+        "street": {
+          "number": 9574,
+          "name": "Washington Ave"
+        },
+        "city": "Albury",
+        "state": "Australian Capital Territory",
+        "country": "Australia",
+        "postcode": 5687,
+        "coordinates": {
+          "latitude": "-54.8000",
+          "longitude": "103.6089"
+        },
+        "timezone": {
+          "offset": "+3:30",
+          "description": "Tehran"
+        }
+      },
+      "desc": "Justin Sandersis a Junior Manager of IT department. The primary responsibility is to provide the infrastructure for automation. "
+    },
+    {
+      "name": "Samuel Tolonen",
+      "dept": "IT",
+      "position": "Junior Manager",
+      "email": "samuel.tolonen@example.com",
+      "picture": "https://randomuser.me/api/portraits/men/78.jpg",
+      "location": {
+        "street": {
+          "number": 9354,
+          "name": "Nordenskiöldinkatu"
+        },
+        "city": "Merikarvia",
+        "state": "Kymenlaakso",
+        "country": "Finland",
+        "postcode": 37351,
+        "coordinates": {
+          "latitude": "-71.2688",
+          "longitude": "116.2967"
+        },
+        "timezone": {
+          "offset": "+7:00",
+          "description": "Bangkok, Hanoi, Jakarta"
+        }
+      },
+      "desc": "Samuel Tolonenis a Junior Manager of IT department. The primary responsibility is to provide the infrastructure for automation. "
+    },
+    {
+      "name": "Leah Justad",
+      "dept": "IT",
+      "position": "Junior Manager",
+      "email": "leah.justad@example.com",
+      "picture": "https://randomuser.me/api/portraits/women/37.jpg",
+      "location": {
+        "street": {
+          "number": 7502,
+          "name": "Treskeveien"
+        },
+        "city": "Uthaug",
+        "state": "Hordaland",
+        "country": "Norway",
+        "postcode": "3525",
+        "coordinates": {
+          "latitude": "61.5318",
+          "longitude": "146.6482"
+        },
+        "timezone": {
+          "offset": "-1:00",
+          "description": "Azores, Cape Verde Islands"
+        }
+      },
+      "desc": "Leah Justadis a Junior Manager of IT department. The primary responsibility is to provide the infrastructure for automation. "
+    },
+    {
+      "name": "Aria Anderson",
+      "dept": "IT",
+      "position": "Junior Manager",
+      "email": "aria.anderson@example.com",
+      "picture": "https://randomuser.me/api/portraits/women/15.jpg",
+      "location": {
+        "street": {
+          "number": 2554,
+          "name": "Brockville Road"
+        },
+        "city": "Hamilton",
+        "state": "Otago",
+        "country": "New Zealand",
+        "postcode": 24531,
+        "coordinates": {
+          "latitude": "-89.7472",
+          "longitude": "-4.3100"
+        },
+        "timezone": {
+          "offset": "+8:00",
+          "description": "Beijing, Perth, Singapore, Hong Kong"
+        }
+      },
+      "desc": "Aria Andersonis a Junior Manager of IT department. The primary responsibility is to provide the infrastructure for automation. "
+    },
+    {
+      "name": "Keira Singh",
+      "dept": "IT",
+      "position": "Junior Manager",
+      "email": "keira.singh@example.com",
+      "picture": "https://randomuser.me/api/portraits/women/45.jpg",
+      "location": {
+        "street": {
+          "number": 299,
+          "name": "Mt Eden Road"
+        },
+        "city": "Upper Hutt",
+        "state": "Nelson",
+        "country": "New Zealand",
+        "postcode": 22430,
+        "coordinates": {
+          "latitude": "-20.2106",
+          "longitude": "164.4316"
+        },
+        "timezone": {
+          "offset": "+5:30",
+          "description": "Bombay, Calcutta, Madras, New Delhi"
+        }
+      },
+      "desc": "Keira Singhis a Junior Manager of IT department. The primary responsibility is to provide the infrastructure for automation. "
+    },
+    {
+      "name": "Mathis Gagné",
+      "dept": "Sales",
+      "position": "Manager",
+      "email": "mathis.gagne@example.com",
+      "picture": "https://randomuser.me/api/portraits/men/2.jpg",
+      "location": {
+        "street": {
+          "number": 3805,
+          "name": "Stanley Way"
+        },
+        "city": "Westport",
+        "state": "Saskatchewan",
+        "country": "Canada",
+        "postcode": "M7A 1D1",
+        "coordinates": {
+          "latitude": "63.1088",
+          "longitude": "2.5980"
+        },
+        "timezone": {
+          "offset": "-8:00",
+          "description": "Pacific Time (US & Canada)"
+        }
+      },
+      "desc": "Mathis Gagnéis a Manager of Sales department. The primary responsibility is to sell an organisation’s services and products."
+    },
+    {
+      "name": "Frederik Mortensen",
+      "dept": "IT",
+      "position": "Junior Manager",
+      "email": "frederik.mortensen@example.com",
+      "picture": "https://randomuser.me/api/portraits/men/48.jpg",
+      "location": {
+        "street": {
+          "number": 8779,
+          "name": "Lundevej"
+        },
+        "city": "Gjerlev",
+        "state": "Danmark",
+        "country": "Denmark",
+        "postcode": 35689,
+        "coordinates": {
+          "latitude": "66.7491",
+          "longitude": "99.8803"
+        },
+        "timezone": {
+          "offset": "+5:45",
+          "description": "Kathmandu"
+        }
+      },
+      "desc": "Frederik Mortensenis a Junior Manager of IT department. The primary responsibility is to provide the infrastructure for automation. "
+    },
+    {
+      "name": "آرمین محمدخان",
+      "dept": "Sales",
+      "position": "Manager",
+      "email": "armyn.mhmdkhn@example.com",
+      "picture": "https://randomuser.me/api/portraits/men/78.jpg",
+      "location": {
+        "street": {
+          "number": 9430,
+          "name": "شورا"
+        },
+        "city": "دزفول",
+        "state": "قزوین",
+        "country": "Iran",
+        "postcode": 30590,
+        "coordinates": {
+          "latitude": "-8.4434",
+          "longitude": "-144.6560"
+        },
+        "timezone": {
+          "offset": "-1:00",
+          "description": "Azores, Cape Verde Islands"
+        }
+      },
+      "desc": "آرمین محمدخانis a Manager of Sales department. The primary responsibility is to sell an organisation’s services and products."
+    },
+    {
+      "name": "Grace Arnold",
+      "dept": "Sales",
+      "position": "Manager",
+      "email": "grace.arnold@example.com",
+      "picture": "https://randomuser.me/api/portraits/women/51.jpg",
+      "location": {
+        "street": {
+          "number": 7055,
+          "name": "Windsor Road"
+        },
+        "city": "Chichester",
+        "state": "Leicestershire",
+        "country": "United Kingdom",
+        "postcode": "D54 3QG",
+        "coordinates": {
+          "latitude": "-31.1776",
+          "longitude": "123.3075"
+        },
+        "timezone": {
+          "offset": "+1:00",
+          "description": "Brussels, Copenhagen, Madrid, Paris"
+        }
+      },
+      "desc": "Grace Arnoldis a Manager of Sales department. The primary responsibility is to sell an organisation’s services and products."
+    }
+  ]
