@@ -1,9 +1,5 @@
 <template>
   <section>
-    <div style="margin: 0.5rem; z-index: 999; position: absolute; top:0;">
-      Back-end server URL: <input type="text" ref="input" id="backend" value="http://127.0.0.1:3000" />
-      <button v-on:click="backend()" style="margin-left: 5px; border: 1px solid #333;">Connect</button>
-    </div>
     <div id="header">
       <div class="wrapper">
         <div class="section-intro">
@@ -24,6 +20,12 @@
         <div class="dim"></div>
         <div class="circle"></div>
       </div>
+    </div>
+
+    <div style="width: 100%; text-align: center; font-size: 1.5rem" v-show="!show">
+        Back-end server: <input type="text" ref="input" id="backend" class="form-control" placeholder="http://{host}:3000" />
+        <button v-on:click="backend()" class="form-btn">Connect</button>
+        <div v-show="isError" style="font-size: 1.5rem; margin: 1rem"> Check server connection. </div>
     </div>
 
     <div class="card-carousel" id="employee">
@@ -64,7 +66,6 @@ import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser, faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
-import members from '../assets/members.json'
 
 library.add(faUser, faMapMarkedAlt);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
@@ -79,48 +80,47 @@ export default {
     activeItem: null,
     activeProfile: true,
     isActive:  false,
-    items: members,
+    items: '',
     limit: 0,
     show: false,
+    errorStatus: '',
   }),
   mounted() {
-      const container = document.querySelector('#employee');
-      let offset = 0;
-
-      //window.addEventListener('wheel', (e) => {
-      window.addEventListener('wheel', (e) => {
-        offset += Math.sign(e.deltaY) * 60;
-        if (offset < 0) {
-          offset = 0;
-        } else if (offset > container.scrollWidth - window.innerWidth) {
-          offset = container.scrollWidth - window.innerWidth;
-        }
-        container.scrollLeft=offset;
-        //container.style.transform = `translateX(-${offset}px`;
-        if(container.scrollLeft + container.clientWidth >= container.scrollWidth && !this.isLoading && this.show) {
-          container.style.justifyContent = 'flex-start';
-          this.isLoading = true;
-          setTimeout(this.infiniteHandler, 500);
-        }
-      });
-      container.addEventListener('scroll', () => {
-        if(container.scrollLeft + container.clientWidth >= container.scrollWidth && !this.isLoading && this.show) {
-          container.style.justifyContent = 'flex-start';
-          this.isLoading = true;
-          setTimeout(this.infiniteHandler, 500);
-        }
-      });
+    const container = document.querySelector('#employee');
+    let offset = 0;
+    window.addEventListener('wheel', (e) => {
+      offset += Math.sign(e.deltaY) * 60;
+      if (offset < 0) {
+        offset = 0;
+      } else if (offset > container.scrollWidth - window.innerWidth) {
+        offset = container.scrollWidth - window.innerWidth;
+      }
+      container.scrollLeft=offset;
+      //container.style.transform = `translateX(-${offset}px`;
+      if(container.scrollLeft + container.clientWidth >= container.scrollWidth && !this.isLoading && this.show) {
+        container.style.justifyContent = 'flex-start';
+        this.isLoading = true;
+        setTimeout(this.infiniteHandler, 500);
+      }
+    });
+    container.addEventListener('scroll', () => {
+      if(container.scrollLeft + container.clientWidth >= container.scrollWidth && !this.isLoading && this.show) {
+        container.style.justifyContent = 'flex-start';
+        this.isLoading = true;
+        setTimeout(this.infiniteHandler, 500);
+      }
+    });
   },
   methods: {
     toggle: function () {
       this.isActive = !this.isActive;
       this.activeProfile = !this.activeProfile;
     },
-    infiniteHandler(url = this.host) {
+    async infiniteHandler(url = this.host) {
       if(this.dept !== '') {
         url = url+'/dept/'+this.dept;
       }
-      jsonp(url).then((data) => {
+      await jsonp(url).then((data) => {
         if(data.users.length) {
           this.items.push(...data.users);
           this.isLoading = false;
@@ -128,25 +128,27 @@ export default {
           //$state.complete()
         }
       }, function(error) {
-        // handle errors
-        console.log(error);
+        this.isError=true;
+        this.errorStatus = error.status;
       });
     },
-    callAPI: function (url = this.host) {
+    callAPI: async function (url = this.host) {
       try {
         if(this.dept !== '') {
           url = url+'/dept/'+this.dept;
         }
-        jsonp(url).then((data) => {
+        await jsonp(url).then((data) => {
           console.log(data);
           this.activeItem = null;
           this.items = data.users;
           this.isLoading=false;
+          this.show=true;
         }, function(error) {
-          console.log(error);
+          console.log(error.status);
           this.isError=true;
         });
-      } catch (err) {
+      } catch (error) {
+        console.log(error.status);
         this.isError=true;
       } finally {
         this.isLoading=false;
@@ -166,9 +168,8 @@ export default {
     },
     backend: function () {
       const backend = document.getElementById('backend').value;
-      this.host = backend;
       this.isLoading=true;
-      this.show=true;
+      this.host = backend;
       this.callAPI();
     },
   },
@@ -352,4 +353,8 @@ div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0
 
 .invisible {opacity:0; }
 .visible {opacity:1 !important;}
+
+.form-control {width: 25%; padding: .375rem .75rem;font-size: 1rem; font-weight: 400; line-height: 1.5;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da; border-radius: .25rem;}
+.form-btn {display: inline-block;font-weight: 400;line-height: 1.5;color: #212529;text-align: center;text-decoration: none;vertical-align: middle;cursor: pointer;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;border-radius: .25rem; margin-left: 5px}
+
 </style>
