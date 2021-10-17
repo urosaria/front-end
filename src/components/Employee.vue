@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div style="width: 100%; text-align: center; font-size: 1.5rem" v-show="!show">
+    <div class="backend" v-show="!show">
         Back-end server: <input type="text" ref="input" id="backend" class="form-control" placeholder="http://{host}:3000" />
         <button v-on:click="backend()" class="form-btn">Connect</button>
         <div v-show="isError" style="font-size: 1.5rem; margin: 1rem"> Check server connection. </div>
@@ -187,13 +187,15 @@ div#header .wrapper ul li button{padding:1rem 2rem;font-size:1rem;transition: al
 div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0.5rem;font-weight: bold;color:white;background-color:#222;}
 
 @media screen and (max-width: 767px) {
-  div#header {font-weight: bold; margin: 0!important; position: fixed; padding-top: 20px; top: 0; left: 0; right: 0; z-index: 9;box-shadow: 2px 3px 4.7px 0.3px rgb(0 0 0 / 24%);background-color: #dddddd;}
+  div#header {font-weight: bold; margin: 0!important; position: fixed; top: 0; left: 0; right: 0; z-index: 9;box-shadow: 2px 3px 4.7px 0.3px rgb(0 0 0 / 24%);background-color: #dddddd;}
   div#header .wrapper ul {display: flex; width:90%; margin:0 auto;justify-content: space-around}
   div#header .wrapper ul li {margin: 0.3rem}
   div#header .wrapper .section-intro h2:after {height: .3rem; margin: 0.5rem auto 1rem;}
   div#header .wrapper ul li button{padding: 0.7rem 1rem}
   div#header .wrapper ul li button.font-weight {padding: 0.7rem 1rem}
   div#employee {padding: 150px 10px 0 10px; height: 100%;}
+  .form-control {width: 40% !important;}
+  .backend {position: relative; top: 100px}
 }
 
 .item{margin:auto 3px;}
@@ -356,5 +358,5 @@ div#header .wrapper ul li button.font-weight {padding:1rem 3rem;letter-spacing:0
 
 .form-control {width: 25%; padding: .375rem .75rem;font-size: 1rem; font-weight: 400; line-height: 1.5;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da; border-radius: .25rem;}
 .form-btn {display: inline-block;font-weight: 400;line-height: 1.5;color: #212529;text-align: center;text-decoration: none;vertical-align: middle;cursor: pointer;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;border-radius: .25rem; margin-left: 5px}
-
+.backend {width: 100%; text-align: center; }
 </style>
